@@ -33,7 +33,7 @@ class Win1(tk.Frame):
         self.button.pack(side="top")
         self.button = tk.Button(self, text="Show Data by Data alphabet", command=self.alphabet)
         self.button.pack(side="top")
-        self.button = tk.Button(self, text="Advance Actions", command=self.advance)
+        self.button = tk.Button(self, text="More Filters", command=self.advance)
         self.button.pack(side="top")
 
     def advance(self):
@@ -90,20 +90,22 @@ class Win2(tk.Frame):
         tk.Frame.__init__(self, args[0], **kwargs)
         dictionary = args[1]
         self.buttonDic = dict()
+        self.check = 0
         for item, key in dictionary.iteritems():
             self.buttonDic.update({key : item})
         for item, key in dictionary.iteritems():
             self.buttonDic[key] = tk.IntVar()
             self.button = tk.Checkbutton(self, text=str(key), variable=self.buttonDic[key])
             self.button.pack(side="top")
-        self.button = tk.Button(self, text="Filter files with at least one of these columns", command=self.filter)
+        self.button = tk.Button(self, text="Filter Files", command=self.filter)
         self.button.pack()
-        self.button = tk.Button(self, text="Filter files only with all of these columns", command=self.filter2)
-        self.button.pack()
+        self.checkbutton = tk.Checkbutton(self, text="merge all document into one?", variable=self.check)
+        self.checkbutton.pack()
 
     def filter(self):
         result = self.show()
         filter.c_method1(result)
+        print self.check
         execfile("merge.py")
         self.destroy()
 
