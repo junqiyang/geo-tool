@@ -56,7 +56,7 @@ class Win1(tk.Frame):
                 item = l[0]+":"+l[1]+":"+l[2]
                 key = l[2]
                 freq.update({int(key): item})
-            freq = collections.OrderedDict(sorted(freq.items()))
+            freq = collections.OrderedDict(reversed(sorted(freq.items())))
         t = tk.Toplevel(self)
         t.b = tk.Button(t, text="close", command=lambda: t.destroy())
         t.b.pack()
@@ -83,6 +83,7 @@ class Win1(tk.Frame):
         win2 = Win2(t, freq)
         win2.pack(side = "top")
 
+	
 
 
 class Win2(tk.Frame):
@@ -99,8 +100,7 @@ class Win2(tk.Frame):
             self.button.pack(side="top")
         self.button = tk.Button(self, text="Filter Files", command=self.filter)
         self.button.pack()
-        self.checkbutton = tk.Checkbutton(self, text="merge all document into one?", variable=self.check)
-        self.checkbutton.pack()
+
 
     def filter(self):
         result = self.show()

@@ -13,7 +13,6 @@ def c_method1(list1):
         fin.write(item + " ")
     for files in all_files:
         if files == directory+'/result\\finalresult.csv' or files == directory+'/result\\sectionC.csv':
-            print "skipped"
             continue
 
         valid = False
@@ -21,6 +20,8 @@ def c_method1(list1):
         reader = csv.reader(fin)
         line = reader.next()
         for item in list1:
+            if item == "DEPTH(F)":
+                continue
             if item in line:
                 valid = True
 
