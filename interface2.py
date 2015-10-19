@@ -1,6 +1,6 @@
 __author__ = 'junqi'
 import Tkinter as tk
-import AdvanceAction,sys
+import AdvanceAction,sys,sorting
 
 class Win3(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -14,6 +14,7 @@ class Win3(tk.Frame):
         self.button = tk.Button(self, text="Sort Data")
         self.button.pack()
 
+
     def replace(self):
         a = tk.Toplevel(self)
         win_R = Replace(a)
@@ -23,7 +24,7 @@ class Win3(tk.Frame):
         a = tk.Toplevel(self)
         win_R = Range(a)
         win_R.pack(side = "top")
-		
+
     def keyword(self):
         a = tk.Toplevel(self)
         win_R = Keyword(a)
@@ -41,7 +42,7 @@ class Replace(tk.Frame):
         self.L1.pack()
         self.E2 = tk.Entry(self, bd=5)
         self.E2.pack()
-        self.button = tk.Button(self, text="Filter",command=self.act)
+        self.button = tk.Button(self, text="Filter", command=self.act)
         self.button.pack()
 
     def act(self):
@@ -70,15 +71,17 @@ class Range(tk.Frame):
             self.row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
             var = tk.IntVar()
             self.CB = tk.Checkbutton(self.row, text=item,variable=var)
-            self.buttonDic[item]= var
+            self.buttonDic[item] = var
             self.CB.pack(side=tk.LEFT)
             self.E1 = tk.Entry(self.row)
             self.E1.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
+            self.E1.insert(0, sorting.result2[self.valid_column.index(item)])
             self.Elist1[item]=self.E1
             self.lab = tk.Label(self.row, text="<= DATA <=")
             self.lab.pack(side=tk.RIGHT)
             self.E2 = tk.Entry(self.row)
             self.E2.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
+            self.E2.insert(0, sorting.result1[self.valid_column.index(item)])
             self.Elist2[item] = self.E2
 
         self.button = tk.Button(self, text="Filter", command=self.act)
@@ -99,11 +102,8 @@ class Range(tk.Frame):
                     large += [float("inf")]
                 else:
                     large += [float(self.Elist1[item].get())]
-        print small
-        print large
-        print keyword
-        AdvanceAction.rangefile(keyword,small,large)
-		
+        AdvanceAction.rangefile(keyword, small, large)
+
 
 class Keyword(tk.Frame):
     def __init__(self, *args, **kwargs):

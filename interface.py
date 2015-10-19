@@ -1,6 +1,6 @@
 __author__ = 'junqi'
 import Tkinter as tk
-import os,collections,filter,glob,interface2
+import os,collections,filter,glob,interface2,sorting,calculation
 
 class MainWindow(tk.Frame):
 
@@ -35,6 +35,13 @@ class Win1(tk.Frame):
         self.button.pack(side="top")
         self.button = tk.Button(self, text="More Filters", command=self.advance)
         self.button.pack(side="top")
+        self.button = tk.Button(self, text="Calculation", command=self.calculation)
+        self.button.pack(side="top")
+
+    def calculation(self):
+        a = tk.Toplevel(self)
+        win_R = calculation.calculation(a)
+        win_R.pack(side = "top")
 
     def advance(self):
         t = tk.Toplevel(self)
@@ -64,6 +71,7 @@ class Win1(tk.Frame):
         win2.pack(side = "top")
 
     def alphabet(self):
+        print sorting.result1
         all_result = glob.glob('filter/*.csv')
         for files in all_result:
             os.remove(files)
