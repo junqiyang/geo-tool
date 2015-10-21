@@ -8,6 +8,7 @@ dictionary = dict()
 
 
 def check2(reader,writer):
+    old_list = list()
     line1 = list()
     line2 = list()
     global nullvalue
@@ -15,6 +16,7 @@ def check2(reader,writer):
     for line in reader:
         if str(line[0])[0] == '#':#if it is a comment line
             continue
+
         if str(line[0])[0] == '~':
             newsection = str(line)[3].lower()
             global sections
@@ -30,7 +32,13 @@ def check2(reader,writer):
 
             currentsection = str(line[0])[1].lower()
             if currentsection == 'a':
+                dictionary.update({'d': list()})
+                d_list = dictionary['d']
+                for i in range(2, len(Corder)+1):
+                    line2 = line2 + ["Delta_"+Corder.get(i)]
+                    d_list += ["Delta_"+Corder.get(i)]
                 writer.writerow(line2)
+                dictionary['d']=d_list
             if currentsection == 'c':
                 order = 1
                 DDD = 'DEPTH(F)'
@@ -48,7 +56,7 @@ def check2(reader,writer):
             phrase1 = str(line)
             phrase2 = str(line)
             try:
-                index1 = phrase1.index(' ') #TODO Check if don't know if this is correct
+                index1 = phrase1.index(' ')
                 index2 = phrase1.index(':')
                 index3 = phrase1.index('.')
                 index3 = phrase1.index('.')
@@ -108,13 +116,25 @@ def check2(reader,writer):
             except ValueError:
                 continue
 
+
         if currentsection == 'a':
-            length = len(line2)
+
             list3 = str(line[0]).split()
-            for i in range(0,len(list3)):
+            delta_list = list()
+            for i in range(0, len(list3)):
                 checkvalue = float(list3[i])
                 if checkvalue == nullvalue:
                     list3[i] = ''
                 line1[findme+i] = str(list3[i])
-            writer.writerow(line1)
-        #write to file
+            if old_list != []:
+                for i in range(1, len(list3)):
+                    if list3[i] == '' or old_list[i] == '':
+                        delta_list += ['']
+                    else:
+                        a = float(list3[i])
+                        b = float(old_list[i])
+                        delta = a-b
+                        delta_list += [str(delta)]
+            old_list = list3
+            writer.writerow(line1+delta_list)
+        #write to filea'c

@@ -8,7 +8,7 @@ with open('tmp.txt', 'r') as content_file:
 
 valid_column = str(content).split(" ")
 valid_column.remove('')
-print valid_column
+
 
 with open('result/finalresult.csv','r') as f:
     reader = csv.reader(f)
@@ -24,15 +24,10 @@ for item in allcolumn:
 for item in valid_column:
     setcolumn = setcolumn + [item]
 
-check = True
-for item in allcolumn:
-
-    if item == 'ELEVATION OF KELLY BUSHING':
-        check = False
-    if check == False:
-        setcolumn = setcolumn + [item]
-    else:
+for item in valid_column:
+    if item == "DEPTH(F)":
         continue
+    setcolumn = setcolumn + ['Delta_'+item]
 
 all_result = glob.glob('filter/*.csv')
 fout = open('filter/finalresult.csv','w')
@@ -48,15 +43,19 @@ for files in all_result:
     fin = open(files, 'r')
     reader = csv.reader(fin)
     check_column = reader.next()
+
     indexline = ['']*len(check_column)
     for item in check_column:
         if item in setcolumn:
             indexline[check_column.index(item)] = setcolumn.index(item)
     for lines in reader:
-        for i in range(0, len(setcolumn)-1):
+        for i in range(len(setcolumn)):
             if i in indexline:
                 index = indexline.index(i)
-                line[i] = lines[index]
+                try:
+                    line[i] = lines[index]
+                except IndexError:
+                    line[i] = ''
             else:
                 line[i] = ''
         writer.writerow(line)

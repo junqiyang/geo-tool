@@ -9,6 +9,7 @@ all_files = glob.glob(os.path.join(path, '*.csv'))
 
 def c_method1(list1):
     fin = open("tmp.txt",'w')
+    fin.write("DEPTH(F) ")
     for item in list1:
         fin.write(item + " ")
     for files in all_files:
@@ -28,34 +29,12 @@ def c_method1(list1):
         fin.close()
         if valid == True:
             files = str(files).replace('/','\\')
-            path2 = directory + '/filter'
-            target = str(path2).replace('/', '\\')
-            os.system("xcopy /s /i %s %s " % (files, target))
+            target = str(files).replace('result','filter')
+            fp = open(files, "r")
+            fq = open(target, "w")
+            fq.write(fp.read())
+            fp.close()
+            fq.close()
 
 
-def c_method2(list1):
-    fin = open("tmp.txt",'w')
-    for item in list1:
-        fin.write(item + " ")
-    for files in all_files:
-        if files == directory+'/result\\finalresult.csv' or files == directory+'/result\\sectionC.csv':
-            print "skipped"
-            continue
-
-
-        valid = True
-        fin = open(files, 'r')
-        reader = csv.reader(fin)
-        line = reader.next()
-        for item in list1:
-            if item not in line:
-                valid = False
-
-        fin.close()
-        if valid == True:
-            print "success"
-            files = str(files).replace('/','\\')
-            path2 = directory + '/filter'
-            target = str(path2).replace('/', '\\')
-            os.system("xcopy /s /i %s %s " % (files, target))
 

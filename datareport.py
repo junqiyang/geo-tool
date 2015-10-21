@@ -7,6 +7,7 @@ rowcount = dict()
 with open('result/sectionC.csv','r') as f:
     reader = csv.reader(f)
     setcolumn = next(reader)
+f.close()
 
 for item in setcolumn:
     columncount.update({item: 0})
@@ -16,7 +17,6 @@ all_result = glob.glob('result/*.csv')
 counter = 0
 for files in all_result:
     if files == 'result\\finalresult.csv' or files == 'result\\sectionC.csv':
-        print "skipped"
         continue
     else:
         counter += 1
@@ -42,6 +42,8 @@ for files in all_result:
                 element = setcolumn[columnindex[i]]
                 if line[columnindex2[i]] != '':
                     rowcount[element] += 1
+        fin.close()
 
 for item, time in columncount.iteritems():
     report.write(str(item) + '  :  ' + str(time) + ' : ' + str(rowcount[item])+ " \n")
+report.close()

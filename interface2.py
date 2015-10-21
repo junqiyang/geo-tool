@@ -9,10 +9,6 @@ class Win3(tk.Frame):
         self.button.pack()
         self.button = tk.Button(self, text="Filter by Range", command=self.range)
         self.button.pack()
-        self.button = tk.Button(self, text="Filter by Keyword", command=self.keyword)
-        self.button.pack()
-        self.button = tk.Button(self, text="Sort Data")
-        self.button.pack()
 
 
     def replace(self):
@@ -66,6 +62,9 @@ class Range(tk.Frame):
         self.Elist1={}
         self.Elist2={}
         self.buttonDic={}
+        small = list()
+        big = list()
+        sorting.findminmax(small, big)
         for item in self.valid_column:
             self.row = tk.Frame(self)
             self.row.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
@@ -75,13 +74,13 @@ class Range(tk.Frame):
             self.CB.pack(side=tk.LEFT)
             self.E1 = tk.Entry(self.row)
             self.E1.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
-            self.E1.insert(0, sorting.result2[self.valid_column.index(item)])
+            self.E1.insert(0, small[self.valid_column.index(item)])
             self.Elist1[item]=self.E1
             self.lab = tk.Label(self.row, text="<= DATA <=")
             self.lab.pack(side=tk.RIGHT)
             self.E2 = tk.Entry(self.row)
             self.E2.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
-            self.E2.insert(0, sorting.result1[self.valid_column.index(item)])
+            self.E2.insert(0, big[self.valid_column.index(item)])
             self.Elist2[item] = self.E2
 
         self.button = tk.Button(self, text="Filter", command=self.act)

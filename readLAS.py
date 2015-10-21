@@ -29,6 +29,7 @@ filterfolder = directory + '/filter'
 if not os.path.exists(filterfolder):
     os.makedirs(filterfolder)
 
+
 for filename in all_files:
     try:
         filecount += 1
@@ -56,18 +57,22 @@ for filename in all_files:
 fout = open(directory+'/result/finalresult.csv','w')
 writer2 = csv.writer(fout, lineterminator='\n')
 setcolumn = list()
-for key, value in LAStoCSV.dictionary.iteritems():
-    setcolumn = value+setcolumn
+setcolumn += LAStoCSV.dictionary['w']
+setcolumn += LAStoCSV.dictionary['p']
+setcolumn += LAStoCSV.dictionary['c']
+setcolumn += LAStoCSV.dictionary['d']
 writer2.writerow(setcolumn)
-
+fout.close()
 
 fout = open(directory+'/result/sectionC.csv','w')
 writer3 = csv.writer(fout, lineterminator='\n')
 writer3.writerow(LAStoCSV.dictionary.get('c'))
 passcount = filecount-errorcount
+fout.close()
 
 fout = open(directory+'/report/processor_report.txt','w')
 fout.write("read %s files in total \n" % filecount)
+
 
 fout.write("passed %s files \n" % passcount)
 fout.write("failed %s files \n" % errorcount)
@@ -75,3 +80,4 @@ if errorcount != 0:
     fout.write("the failed files list below:")
     for item in errorlist:
         fout.write(item)
+fout.close()

@@ -1,9 +1,9 @@
 __author__ = 'junqi'
 import Tkinter as tk
-import os,collections,filter,glob,interface2,sorting,calculation
+import os,collections,filter,glob,interface2
+
 
 class MainWindow(tk.Frame):
-
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
         self.button = tk.Button(self, text="Parser LAS files to .csv files", command=self.LAStoCSV)
@@ -26,6 +26,7 @@ class MainWindow(tk.Frame):
         win1 = Win1(t)
         win1.pack(side = "top")
 
+
 class Win1(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -35,13 +36,8 @@ class Win1(tk.Frame):
         self.button.pack(side="top")
         self.button = tk.Button(self, text="More Filters", command=self.advance)
         self.button.pack(side="top")
-        self.button = tk.Button(self, text="Calculation", command=self.calculation)
-        self.button.pack(side="top")
 
-    def calculation(self):
-        a = tk.Toplevel(self)
-        win_R = calculation.calculation(a)
-        win_R.pack(side = "top")
+
 
     def advance(self):
         t = tk.Toplevel(self)
@@ -71,7 +67,6 @@ class Win1(tk.Frame):
         win2.pack(side = "top")
 
     def alphabet(self):
-        print sorting.result1
         all_result = glob.glob('filter/*.csv')
         for files in all_result:
             os.remove(files)
@@ -91,8 +86,6 @@ class Win1(tk.Frame):
         win2 = Win2(t, freq)
         win2.pack(side = "top")
 
-	
-
 
 class Win2(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -100,6 +93,11 @@ class Win2(tk.Frame):
         dictionary = args[1]
         self.buttonDic = dict()
         self.check = 0
+        for item, key in dictionary.iteritems():
+            if str(item)[:8] == "DEPTH(F)" or str(key)[:8] == "DEPTH(F)":
+                print "yes"
+                dictionary.pop(item, None)
+        print dictionary
         for item, key in dictionary.iteritems():
             self.buttonDic.update({key : item})
         for item, key in dictionary.iteritems():
@@ -117,12 +115,6 @@ class Win2(tk.Frame):
         execfile("merge.py")
         self.destroy()
 
-
-    def filter2(self):
-        result = self.show()
-        filter.c_method2(result)
-        execfile("merge.py")
-        self.destroy()
 
     def show(self):
         result = list()
