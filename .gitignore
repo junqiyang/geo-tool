@@ -1,1 +1,7 @@
 *.pyc
+*.txt
+*.LAS
+*.csv
+*.zip
+tmp.txt
+tmp2.txt
