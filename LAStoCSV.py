@@ -25,7 +25,7 @@ def check2(reader,writer):
                 global dictionary
                 dictionary.update({newsection: list()})
             if currentsection == 'c':
-                for i in range(1,len(Corder)+1):
+                for i in range(1, len(Corder)+1):
                     line2 = line2 + [Corder.get(i)]
                     line1 = line1 + ['']
                 findme = line2.index('DEPTH(F)')
@@ -39,7 +39,8 @@ def check2(reader,writer):
                         line2 = line2 + ["Delta_"+Corder.get(i)]
                         d_list += ["Delta_"+Corder.get(i)]
                     except TypeError:
-                        print reader
+                        line2 = line2 + ["Delta_ "]
+                        d_list += ["Delta_ "]
                 writer.writerow(line2)
                 dictionary['d']=d_list
             if currentsection == 'c':
