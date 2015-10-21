@@ -93,20 +93,24 @@ class Win2(tk.Frame):
         dictionary = args[1]
         self.buttonDic = dict()
         self.check = 0
+        self.scrollbar = tk.Scrollbar(self)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.listbox = tk.Listbox(self, yscrollcommand=self.scrollbar.set)
         for item, key in dictionary.iteritems():
             if str(item)[:8] == "DEPTH(F)" or str(key)[:8] == "DEPTH(F)":
                 print "yes"
                 dictionary.pop(item, None)
-        print dictionary
+
         for item, key in dictionary.iteritems():
             self.buttonDic.update({key : item})
         for item, key in dictionary.iteritems():
             self.buttonDic[key] = tk.IntVar()
-            self.button = tk.Checkbutton(self, text=str(key), variable=self.buttonDic[key])
+            self.button = tk.Checkbutton(self.listbox, text=str(key), variable=self.buttonDic[key])
             self.button.pack(side="top")
         self.button = tk.Button(self, text="Filter Files", command=self.filter)
-        self.button.pack()
-
+        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH)
+        self.scrollbar.config(command=self.listbox.yview)
+        self.button.pack(side = tk.BOTTOM)
 
     def filter(self):
         result = self.show()
