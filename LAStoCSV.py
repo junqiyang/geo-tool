@@ -128,8 +128,12 @@ def check2(reader,writer):
                 line1[findme+i] = str(list3[i])
             if old_list != []:
                 for i in range(1, len(list3)):
-                    if list3[i] == '' or old_list[i] == '':
-                        delta_list += ['']
+                    try:
+                        if list3[i] == '' or old_list[i] == '':
+                            delta_list += ['']
+                    except IndexError:
+                            delta_list += ['']
+                            continue
                     else:
                         a = float(list3[i])
                         b = float(old_list[i])
