@@ -35,8 +35,11 @@ def check2(reader,writer):
                 dictionary.update({'d': list()})
                 d_list = dictionary['d']
                 for i in range(2, len(Corder)+1):
-                    line2 = line2 + ["Delta_"+Corder.get(i)]
-                    d_list += ["Delta_"+Corder.get(i)]
+                    try:
+                        line2 = line2 + ["Delta_"+Corder.get(i)]
+                        d_list += ["Delta_"+Corder.get(i)]
+                    except TypeError:
+                        print reader
                 writer.writerow(line2)
                 dictionary['d']=d_list
             if currentsection == 'c':
