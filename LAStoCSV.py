@@ -131,14 +131,14 @@ def check2(reader,writer):
                     try:
                         if list3[i] == '' or old_list[i] == '':
                             delta_list += ['']
+                        else:
+                            a = float(list3[i])
+                            b = float(old_list[i])
+                            delta = a-b
+                            delta_list += [str(delta)]
                     except IndexError:
                             delta_list += ['']
                             continue
-                    else:
-                        a = float(list3[i])
-                        b = float(old_list[i])
-                        delta = a-b
-                        delta_list += [str(delta)]
             old_list = list3
             writer.writerow(line1+delta_list)
         #write to filea'c
